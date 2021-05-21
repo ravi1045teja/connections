@@ -53,3 +53,6 @@ docker-compose exec connections pytest
 ```
 docker-compose exec connections flake8 .
 ```
+### X degrees of separation Kavin Bacon
+
+- I have written in text file and uploaed in the folder as "5th Degrees of Separation Kavin Bacon".txt , please check it.
