@@ -1,0 +1,35 @@
+1) End point:
+     @blueprint.route('/people/connected/<person_id>/<x>', methods=['GET'])
+     def get_connected_people_by_x_degrees(person_id,x):
+            ## Build an adjacency matrix graph from the connections class person_ids in rows and columns
+            ##  Assumption to be Undirected graph, since people know each other mutually however they are connected and this makes easier to implement
+            ##Initialise the counter = 0
+            ## Implement Breadth First Search algorithm , in which pass the "person_id" and traverse by queuing Visited person_id to Queue
+            ##Increment the counter by 1
+            ##Repeeat the above three steps till the counter is equal to X
+            ##Traverse the Queue and get the Person Details by Id and append it to the list
+            ##Dump the list to JSON
+            return JSON
+2)Technical Challenges:
+  If the number of people increases and so as the connections, the complexity by increase
+  Approach: (Same as mentioned in the above point 1)
+   ## Build an adjacency matrix graph from the connections class person_ids in rows and columns
+   ##  Assumption to be Undirected graph, since people know each other mutually however they are connected and this makes easier to implement
+   ## Initialise the counter = 0
+   ## Implement Breadth First Search algorithm , in which pass the "person_id" and traverse by queuing Visited person_id to Queue
+   ## Increment the counter by 1
+   ## Repeeat the above three steps till the counter is equal to X
+   ##T raverse the Queue and get the Person Details by Id and append it to the list
+   ## Dump the list to JSON
+
+  Question to the Product Owner:
+  In the future Development, is there any chance of getting the connection types of how the users are connected .
+  (For eg: In Kevin Bacon situation , people are connected by their movies) similiar way, instead of getting data
+  only from Person table, do we have to get how these people are connected to one another till degrees of separation is reached.
+
+
+
+
+
+
+

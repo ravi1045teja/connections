@@ -34,6 +34,8 @@ def create_connection(connection):
     return ConnectionSchema().jsonify(connection), HTTPStatus.CREATED
 
 
+#Second Objective
+
 @blueprint.route('/connections', methods=['GET'])
 def get_connection():
     connection_schema = ConnectionSchema(many=True)
@@ -61,6 +63,8 @@ def get_connection():
     return jsonify(res), HTTPStatus.OK
 
 
+#Second Objective
+
 @blueprint.route('/connections/<connection_id>/<connection_type>', methods=['PATCH'])
 def update_connection(connection_id, connection_type):
     try:
@@ -78,7 +82,7 @@ def update_connection(connection_id, connection_type):
 
     return ConnectionSchema().jsonify(con), HTTPStatus.CREATED
 
-
+#Bonus Objective
 @blueprint.route('/mutual_friends/<person_id>/<target_id>', methods=['GET'])
 def get_mutual_friends(person_id, target_id):
     first_list = []
