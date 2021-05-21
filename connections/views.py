@@ -84,7 +84,8 @@ def update_connection(connection_id, connection_type):
     return ConnectionSchema().jsonify(con), HTTPStatus.CREATED
 
 
-# Bonus Objective
+# Bonus Objective Mutual Friends
+
 @blueprint.route('/mutual_friends/<person_id>/<target_id>', methods=['GET'])
 def get_mutual_friends(person_id, target_id):
     first_list = []
