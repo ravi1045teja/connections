@@ -77,3 +77,63 @@ def update_connection(connection_id, connection_type):
         return {"message": "invalid Connection type"}, 400
 
     return ConnectionSchema().jsonify(con), HTTPStatus.CREATED
+
+
+@blueprint.route('/mutual_friends/<person_id>/<target_id>', methods=['GET'])
+def get_mutual_friends(person_id, target_id):
+    first_list = []
+    first_list_target = []
+    first_list_mutual_friends = []
+
+    con1 = Connection.query.filter(Connection.from_person_id == person_id).filter(
+        Connection.connection_type == 'friend')
+    if con1 is not None:
+        for i in con1:
+            dict1 = {i.from_person_id: i.to_person_id}
+            first_list.append(dict1)
+    con2 = Connection.query.filter(Connection.from_person_id == target_id).filter(
+        Connection.connection_type == 'friend')
+    if con2 is not None:
+        for j in con2:
+            dict2 = {j.from_person_id: j.to_person_id}
+            first_list_target.append(dict2)
+    for k, l in zip(first_list, first_list_target):
+        for key, value in k.items():
+            if value == l[key]:
+                first_list_mutual_friends.append(value)
+    second_list = []
+    second_list_target = []
+    second_list_mutual_friends = []
+    con3 = Connection.query.filter(Connection.from_person_id == target_id).filter(
+        Connection.connection_type == 'friend')
+    if con3 is not None:
+        for i in con3:
+            dict3 = {i.from_person_id: i.to_person_id}
+            second_list.append(dict3)
+
+    con4 = Connection.query.filter(Connection.from_person_id == person_id).filter(
+        Connection.connection_type == 'friend')
+    if con4 is not None:
+        for j in con2:
+            dict4 = {j.from_person_id: j.to_person_id}
+            second_list_target.append(dict4)
+    for k, l in zip(second_list, second_list_target):
+        for key, value in k.items():
+            if value == l[key]:
+                second_list_mutual_friends.append(value)
+
+    overall_friends = first_list_mutual_friends + second_list_mutual_friends
+
+    try:
+        l=[]
+        if overall_friends is not None:
+            for m in overall_friends:
+                people = Person.query.filter(Person.id == m)
+                if people is not None:
+
+                    print(PersonSchema.jsonify(people))
+                    l.append(PersonSchema.jsonify(people))
+
+    except NoResultFound:
+        return {"message": "No mutual Friends"}, 200
+    return  json.dumps(l), HTTPStatus.OK
