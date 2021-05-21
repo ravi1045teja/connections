@@ -17,7 +17,9 @@ A demo app showing a simple service using flask and some supporting packages
 
 ### Instructions
 
+- Delete .vsCode folder after getting the code locally.
 - Build and kick off all the services with docker-compose.
+
 
 ```
 docker-compose up -d --build

@@ -34,7 +34,8 @@ def create_connection(connection):
     return ConnectionSchema().jsonify(connection), HTTPStatus.CREATED
 
 
-#Second Objective
+# Second Objective Get Connections
+
 
 @blueprint.route('/connections', methods=['GET'])
 def get_connection():
@@ -63,7 +64,7 @@ def get_connection():
     return jsonify(res), HTTPStatus.OK
 
 
-#Second Objective
+# Second Objective (Update)
 
 @blueprint.route('/connections/<connection_id>/<connection_type>', methods=['PATCH'])
 def update_connection(connection_id, connection_type):
@@ -82,7 +83,8 @@ def update_connection(connection_id, connection_type):
 
     return ConnectionSchema().jsonify(con), HTTPStatus.CREATED
 
-#Bonus Objective
+
+# Bonus Objective
 @blueprint.route('/mutual_friends/<person_id>/<target_id>', methods=['GET'])
 def get_mutual_friends(person_id, target_id):
     first_list = []
@@ -129,15 +131,14 @@ def get_mutual_friends(person_id, target_id):
     overall_friends = first_list_mutual_friends + second_list_mutual_friends
 
     try:
-        l=[]
+        l = []
         if overall_friends is not None:
             for m in overall_friends:
                 people = Person.query.filter(Person.id == m)
                 if people is not None:
-
                     print(PersonSchema.jsonify(people))
                     l.append(PersonSchema.jsonify(people))
 
     except NoResultFound:
         return {"message": "No mutual Friends"}, 200
-    return  json.dumps(l), HTTPStatus.OK
+    return json.dumps(l), HTTPStatus.OK
