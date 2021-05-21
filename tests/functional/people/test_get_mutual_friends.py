@@ -1,7 +1,16 @@
+from http import HTTPStatus
+
 from tests.factories import PersonFactory, ConnectionFactory
 
+EXPECTED_FIELDS = [
+    'id',
+    'first_name',
+    'last_name',
+    'email',
+]
 
-def test_get_people_mutual(db):
+
+def test_get_people_mutual(db, testapp):
     instance = PersonFactory()
     target = PersonFactory()
 
@@ -18,7 +27,25 @@ def test_get_people_mutual(db):
         connection2_email[target.email] = f.email
     db.session.commit()
 
+    db.session.commit()
 
+    connection1_emails_friend = list(connection1_email.values())
+    connection2_emails_friend = list(connection2_email.values())
 
+    for f in connection2_emails_friend:
+        if f in connection1_emails_friend:
+            flag = 1
+        else:
+            flag = 0
+    if flag == 1:
+        res = testapp.get('/people')
 
+        assert res.status_code == HTTPStatus.OK
 
+        assert len(res.json) == 5
+        for person in res.json:
+            for field in EXPECTED_FIELDS:
+                assert field in person
+    else:
+        # If the above statement fails then make the test case fail
+        assert 2 == 3
