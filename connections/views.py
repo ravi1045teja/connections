@@ -1,7 +1,9 @@
 from http import HTTPStatus
 import json
 
+import sqlalchemy
 from flask import Blueprint, jsonify, request
+from sqlalchemy import and_
 from sqlalchemy.orm.exc import NoResultFound
 from webargs.flaskparser import use_args
 from connections.models.connection import Connection, ConnectionType
@@ -54,10 +56,9 @@ def get_connection():
 
         res.append(dict1)
 
-    final_res = dict(zip(ids, res))
-    print(final_res)
+    print(json.dumps(res))
 
-    return jsonify(final_res), HTTPStatus.OK
+    return jsonify(res), HTTPStatus.OK
 
 
 @blueprint.route('/connections/<connection_id>/<connection_type>', methods=['PATCH'])
@@ -66,7 +67,6 @@ def update_connection(connection_id, connection_type):
 
         print(connection_type)
         con = Connection.query.filter(Connection.id == connection_id).one()
-        print(con)
     except NoResultFound:
         return {"message": "Connection could not be found."}, 400
     enum_list = [i.value for i in ConnectionType]
